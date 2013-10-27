@@ -216,7 +216,7 @@ PHP_METHOD(SolrInputDocument, clear)
 }
 /* }}} */
 
-/* {{{ proto bool SolrInputDocument::addField(string field_name, field_value [, float field_boost])
+/* {{{ proto bool SolrInputDocument::addField(string field_name, field_value [[, float field_boost], string modifier)
    Adds a field to the document. Can be called multiple times. */
 PHP_METHOD(SolrInputDocument, addField)
 {
@@ -226,11 +226,15 @@ PHP_METHOD(SolrInputDocument, addField)
 	int field_value_length = 0;
 	double field_boost     = 0.0f;
 	solr_document_t *doc_entry = NULL;
+	solr_char_t *modifier = NULL;
+	int modifier_length  = 0;
 
 	/* Process the parameters passed to the method */
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|d", &field_name,
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|ds", &field_name,
 			&field_name_length, &field_value,
-			&field_value_length, &field_boost) == FAILURE) {
+			&field_value_length, &field_boost,
+			&modifier, &modifier_length
+			) == FAILURE) {
 
 		RETURN_FALSE;
 	}
