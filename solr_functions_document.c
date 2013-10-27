@@ -252,6 +252,7 @@ PHP_SOLR_API void solr_create_document_field_object(solr_field_list_t *field_val
 
 	zend_update_property_string(solr_ce_SolrDocumentField, doc_field, SOLR_FIELD_NAME_PROPERTY_NAME, sizeof(SOLR_FIELD_NAME_PROPERTY_NAME)-1, field_values->field_name TSRMLS_CC);
 	zend_update_property_double(solr_ce_SolrDocumentField, doc_field, SOLR_FIELD_BOOST_PROPERTY_NAME, sizeof(SOLR_FIELD_BOOST_PROPERTY_NAME)-1, field_values->field_boost TSRMLS_CC);
+	zend_update_property_string(solr_ce_SolrDocumentField, doc_field, SOLR_FIELD_UPDATE_PROPERTY_NAME, sizeof(SOLR_FIELD_UPDATE_PROPERTY_NAME)-1, field_values->field_modifier TSRMLS_CC);
 	zend_update_property(solr_ce_SolrDocumentField, doc_field, SOLR_FIELD_VALUES_PROPERTY_NAME, sizeof(SOLR_FIELD_VALUES_PROPERTY_NAME)-1, field_values_array TSRMLS_CC);
 
 	zval_ptr_dtor(&field_values_array);

@@ -24,6 +24,7 @@ Array
                 (
                     [name] => id
                     [boost] => 1.1
+                    [update] => inc
                     [values] => Array
                         (
                             [0] => 1123

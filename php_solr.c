@@ -970,9 +970,10 @@ PHP_MINIT_FUNCTION(solr)
     solr_ce_SolrDocumentField = zend_register_internal_class(&ce TSRMLS_CC);
     solr_ce_SolrDocumentField->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
-    /* Register the name, boost and values properties */
+    /* Register the name, boost, update and values properties */
     zend_declare_property_stringl(solr_ce_SolrDocumentField, SOLR_FIELD_NAME_PROPERTY_NAME, sizeof(SOLR_FIELD_NAME_PROPERTY_NAME)-1, SOLR_SPACE_STRING, sizeof(SOLR_SPACE_STRING)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
     zend_declare_property_double(solr_ce_SolrDocumentField, SOLR_FIELD_BOOST_PROPERTY_NAME, sizeof(SOLR_FIELD_BOOST_PROPERTY_NAME)-1, 0.0f, ZEND_ACC_PUBLIC TSRMLS_CC);
+    zend_declare_property_stringl(solr_ce_SolrDocumentField, SOLR_FIELD_UPDATE_PROPERTY_NAME, sizeof(SOLR_FIELD_UPDATE_PROPERTY_NAME)-1, SOLR_SPACE_STRING, sizeof(SOLR_SPACE_STRING)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
     zend_declare_property_null(solr_ce_SolrDocumentField, SOLR_FIELD_VALUES_PROPERTY_NAME, sizeof(SOLR_FIELD_VALUES_PROPERTY_NAME)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
 
     /* Register the SolrInputDocument class */
