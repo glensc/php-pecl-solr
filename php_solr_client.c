@@ -184,7 +184,9 @@ static void solr_generate_document_xml_from_fields(xmlNode *solr_doc_node, HashT
 				is_first_value = 0; /* Turn off the flag */
 			}
 
-			xmlNewProp(solr_field_node, (xmlChar *) "update", (xmlChar *) doc_field_modifier);
+			if (doc_field_modifier) {
+				xmlNewProp(solr_field_node, (xmlChar *) "update", (xmlChar *) doc_field_modifier);
+			}
 
 			/* Release the memory allocated by xmlEncodeEntitiesReentrant */
 			xmlFree(escaped_field_value);

@@ -270,7 +270,9 @@ PHP_METHOD(SolrInputDocument, addField)
 			field_values->count       = 0L;
 			field_values->field_boost = 0.0;
 			field_values->field_name  = (solr_char_t *) pestrdup(field_name,SOLR_DOCUMENT_FIELD_PERSISTENT);
-			field_values->field_modifier = (solr_char_t *) pestrdup(field_modifier,SOLR_DOCUMENT_FIELD_PERSISTENT);
+			if (field_modifier_length) {
+				field_values->field_modifier = (solr_char_t *) pestrdup(field_modifier,SOLR_DOCUMENT_FIELD_PERSISTENT);
+			}
 			field_values->head        = NULL;
 			field_values->last        = NULL;
 
@@ -380,6 +382,101 @@ PHP_METHOD(SolrInputDocument, getFieldBoost)
 	RETURN_FALSE;
 }
 /* }}} */
+
+/* {{{ proto bool SolrInputDocument::setFieldModifier(string fieldname, string modifier_value)
+   Sets the modifier value for the specified field. */
+PHP_METHOD(SolrInputDocument, setFieldModifier)
+{
+	solr_char_t *field_name = NULL;
+	int field_name_length  = 0;
+	double field_boost     = 0.0;
+	solr_document_t *doc_entry = NULL;
+
+	/* Process the parameters passed to the default constructor */
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "sd", &field_name, &field_name_length, &field_boost) == FAILURE) {
+
+		RETURN_FALSE;
+	}
+
+	if (!field_name_length) {
+
+		RETURN_FALSE;
+	}
+
+	if (field_boost < 0.0) {
+
+		RETURN_FALSE;
+	}
+
+	/* Retrieve the document entry for the SolrDocument instance */
+	if (solr_fetch_document_entry(getThis(), &doc_entry TSRMLS_CC) == SUCCESS) 	{
+
+		solr_field_list_t **field_values = NULL;
+
+		/* If the field already exists in the SolrDocument instance append the value to the field list queue */
+		if (zend_hash_find(doc_entry->fields, (char *) field_name, field_name_length, (void **) &field_values) == SUCCESS) {
+
+			(*field_values)->field_boost = field_boost;
+
+			RETURN_TRUE;
+		}
+
+
+		RETURN_FALSE;
+	}
+
+	RETURN_FALSE;
+}
+/* }}} */
+
+/* {{{ proto float SolrInputDocument::getFieldModifier(string fieldname)
+   Returns the modifier value for the specified field. */
+PHP_METHOD(SolrInputDocument, getFieldModifier)
+{
+	solr_char_t *field_name = NULL;
+	int field_name_length  = 0;
+	int field_modifier_length = 0;
+	solr_document_t *doc_entry = NULL;
+
+	/* Process the parameters passed to the default constructor */
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &field_name, &field_name_length) == FAILURE) {
+
+		RETURN_FALSE;
+	}
+
+	if (!field_name_length) {
+
+		RETURN_FALSE;
+	}
+
+	/* Retrieve the document entry for the SolrDocument instance */
+	if (solr_fetch_document_entry(getThis(), &doc_entry TSRMLS_CC) == SUCCESS) 	{
+
+		solr_field_list_t **field_values = NULL;
+
+		if (zend_hash_find(doc_entry->fields, (char *) field_name, field_name_length, (void **) &field_values) == SUCCESS) {
+			if (!(*field_values)->field_modifier) {
+				RETURN_FALSE;
+			}
+
+			field_modifier_length = strlen((*field_values)->field_modifier);
+			if (!field_modifier_length) {
+				RETURN_FALSE;
+			}
+
+			RETURN_STRINGL((*field_values)->field_modifier, field_modifier_length, 1);
+		}
+
+		RETURN_FALSE;
+	}
+
+	RETURN_FALSE;
+}
+/* }}} */
+
+
+
+
 
 /* {{{ proto array SolrInputDocument::getFieldNames(void)
    Returns an array of all the field names in the document. */

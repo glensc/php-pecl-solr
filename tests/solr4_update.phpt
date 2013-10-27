@@ -9,11 +9,29 @@ require_once "bootstrap.inc";
 $doc = new SolrInputDocument();
 
 $doc->addField('id', 1123, 1.1, "inc");
+//$doc->addField('id2', 1123, 1.3, null); // segfault now
+//$doc->addField('id3', 1123); // segfault now
+
+echo 'FieldModifier id: ';
+var_dump($doc->getFieldModifier('id'));
+
+echo 'FieldModifier id2: ';
+var_dump($doc->getFieldModifier('id2'));
+
+echo 'FieldModifier id3: ';
+var_dump($doc->getFieldModifier('id3'));
+
+echo 'FieldModifier nofield: ';
+var_dump($doc->getFieldModifier('nofield'));
 
 print_r($doc->toArray());
 
 ?>
 --EXPECT--
+FieldModifier id: string(3) "inc"
+FieldModifier id2: bool(false)
+FieldModifier id3: bool(false)
+FieldModifier nofield: bool(false)
 Array
 (
     [document_boost] => 0

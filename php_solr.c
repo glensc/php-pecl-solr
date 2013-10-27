@@ -172,6 +172,10 @@ ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_getFieldBoost_args, SOLR_ARG_PASS_REMAI
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_getFieldModifier_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 1)
+ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
+ZEND_END_ARG_INFO()
+
 ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_getField_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 1)
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
 ZEND_END_ARG_INFO()
@@ -179,6 +183,11 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_setFieldBoost_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 2)
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldBoostValue)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_setFieldModifier_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 2)
+ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
+ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldModifierValue)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_fieldExists_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 1)
@@ -528,6 +537,8 @@ static zend_function_entry solr_input_document_methods[] = {
 	PHP_ME(SolrInputDocument, addField, SolrInputDocument_addField_args, ZEND_ACC_PUBLIC)
 	PHP_ME(SolrInputDocument, getFieldBoost, SolrInputDocument_getFieldBoost_args, ZEND_ACC_PUBLIC)
 	PHP_ME(SolrInputDocument, setFieldBoost, SolrInputDocument_setFieldBoost_args, ZEND_ACC_PUBLIC)
+	PHP_ME(SolrInputDocument, getFieldModifier, SolrInputDocument_getFieldModifier_args, ZEND_ACC_PUBLIC)
+	PHP_ME(SolrInputDocument, setFieldModifier, SolrInputDocument_setFieldModifier_args, ZEND_ACC_PUBLIC)
 	PHP_ME(SolrInputDocument, getFieldNames, Solr_no_args, ZEND_ACC_PUBLIC)
 	PHP_ME(SolrInputDocument, getFieldCount, Solr_no_args, ZEND_ACC_PUBLIC)
 	PHP_ME(SolrInputDocument, getField, SolrInputDocument_getField_args, ZEND_ACC_PUBLIC)

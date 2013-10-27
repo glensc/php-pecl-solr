@@ -215,6 +215,8 @@ PHP_METHOD(SolrInputDocument, clear);
 PHP_METHOD(SolrInputDocument, addField);
 PHP_METHOD(SolrInputDocument, setFieldBoost);
 PHP_METHOD(SolrInputDocument, getFieldBoost);
+PHP_METHOD(SolrInputDocument, setFieldModifier);
+PHP_METHOD(SolrInputDocument, getFieldModifier);
 PHP_METHOD(SolrInputDocument, getFieldNames);
 PHP_METHOD(SolrInputDocument, getFieldCount);
 PHP_METHOD(SolrInputDocument, getField);
