@@ -41,7 +41,7 @@ PHP_SOLR_API void field_copy_constructor(solr_field_list_t **original_field_queu
 
 	while(ptr != NULL)
 	{
-		solr_document_insert_field_value(new_field_queue, ptr->field_value, 0);
+		solr_document_insert_field_value(new_field_queue, ptr->field_value, 0, NULL);
 
 		ptr = ptr->next;
 	}
@@ -50,8 +50,8 @@ PHP_SOLR_API void field_copy_constructor(solr_field_list_t **original_field_queu
 }
 /* }}} */
 
-/* {{{ PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost) */
-PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost)
+/* {{{ PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost, const solr_char_t *field_modifier) */
+PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost, const solr_char_t *field_modifier)
 {
 	solr_field_value_t *new_entry = (solr_field_value_t *) pemalloc(sizeof(solr_field_value_t), SOLR_DOCUMENT_FIELD_PERSISTENT);
 

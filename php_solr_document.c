@@ -50,7 +50,7 @@ static int solr_document_set_field(zval *objptr, solr_char_t *field_name, int fi
 		/* If the field already exists in the SolrDocument instance append the value to the field list queue */
 		if (zend_hash_find(doc_entry->fields, field_name, field_name_length, (void **) &field_values_ptr) == SUCCESS) {
 
-			if (solr_document_insert_field_value(*field_values_ptr, field_value, field_boost) == FAILURE) {
+			if (solr_document_insert_field_value(*field_values_ptr, field_value, field_boost, NULL) == FAILURE) {
 
 				return FAILURE;
 			}
@@ -70,7 +70,7 @@ static int solr_document_set_field(zval *objptr, solr_char_t *field_name, int fi
 			field_values->head        = NULL;
 			field_values->last        = NULL;
 
-			if (solr_document_insert_field_value(field_values, field_value, field_boost) == FAILURE) {
+			if (solr_document_insert_field_value(field_values, field_value, field_boost, NULL) == FAILURE) {
 
 				solr_destroy_field_list(&field_values);
 
@@ -264,7 +264,7 @@ static void solr_unserialize_document_field(HashTable *document_fields, xmlNode 
 			solr_char_t *field_value = (solr_char_t *) solr_xml_get_node_contents(xml_curr_value);
 
 			/* Add this value to the list of values */
-			if (solr_document_insert_field_value(field_values, field_value, 0.0f) == FAILURE) {
+			if (solr_document_insert_field_value(field_values, field_value, 0.0f, NULL) == FAILURE) {
 
 				php_error_docref(NULL TSRMLS_CC, E_WARNING, "Error adding field value during SolrDocument unserialization");
 			}

@@ -544,7 +544,7 @@ PHP_SOLR_API void solr_destroy_param_value(solr_param_t *param, solr_param_value
 /* }}} */
 
 /* {{{ used for SolrDocument field manipulations */
-PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost);
+PHP_SOLR_API int solr_document_insert_field_value(solr_field_list_t *queue, const solr_char_t *field_value, double field_boost, const solr_char_t *field_modifier);
 PHP_SOLR_API void field_copy_constructor(solr_field_list_t **original_field_queue);
 /* }}} */
 

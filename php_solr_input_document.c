@@ -216,7 +216,7 @@ PHP_METHOD(SolrInputDocument, clear)
 }
 /* }}} */
 
-/* {{{ proto bool SolrInputDocument::addField(string field_name, field_value [[, float field_boost], string modifier)
+/* {{{ proto bool SolrInputDocument::addField(string field_name, field_value [[, float field_boost], string field_modifier)
    Adds a field to the document. Can be called multiple times. */
 PHP_METHOD(SolrInputDocument, addField)
 {
@@ -226,14 +226,14 @@ PHP_METHOD(SolrInputDocument, addField)
 	int field_value_length = 0;
 	double field_boost     = 0.0f;
 	solr_document_t *doc_entry = NULL;
-	solr_char_t *modifier = NULL;
-	int modifier_length  = 0;
+	solr_char_t *field_modifier = NULL;
+	int field_modifier_length  = 0;
 
 	/* Process the parameters passed to the method */
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ss|ds", &field_name,
 			&field_name_length, &field_value,
 			&field_value_length, &field_boost,
-			&modifier, &modifier_length
+			&field_modifier, &field_modifier_length
 			) == FAILURE) {
 
 		RETURN_FALSE;
@@ -253,7 +253,7 @@ PHP_METHOD(SolrInputDocument, addField)
 		/* If the field already exists in the SolrDocument instance append the value to the field list queue */
 		if (zend_hash_find(doc_entry->fields, field_name, field_name_length, (void **) &field_values_ptr) == SUCCESS) {
 
-			if (solr_document_insert_field_value(*field_values_ptr, field_value, field_boost) == FAILURE) {
+			if (solr_document_insert_field_value(*field_values_ptr, field_value, field_boost, field_modifier) == FAILURE) {
 
 				RETURN_FALSE;
 			}
@@ -270,10 +270,11 @@ PHP_METHOD(SolrInputDocument, addField)
 			field_values->count       = 0L;
 			field_values->field_boost = 0.0;
 			field_values->field_name  = (solr_char_t *) pestrdup(field_name,SOLR_DOCUMENT_FIELD_PERSISTENT);
+			field_values->field_modifier = (solr_char_t *) pestrdup(field_modifier,SOLR_DOCUMENT_FIELD_PERSISTENT);
 			field_values->head        = NULL;
 			field_values->last        = NULL;
 
-			if (solr_document_insert_field_value(field_values, field_value, field_boost) == FAILURE) {
+			if (solr_document_insert_field_value(field_values, field_value, field_boost, field_modifier) == FAILURE) {
 
 				solr_destroy_field_list(&field_values);
 
