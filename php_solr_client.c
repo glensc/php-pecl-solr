@@ -150,6 +150,7 @@ static void solr_generate_document_xml_from_fields(xmlNode *solr_doc_node, HashT
 	SOLR_HASHTABLE_FOR_LOOP(document_fields)
 	{
 		solr_char_t *doc_field_name;
+		solr_char_t *doc_field_modifier;
 		solr_field_value_t *doc_field_value;
 		solr_field_list_t **field = NULL;
 		zend_bool is_first_value = 1; /* Turn on first value flag */
@@ -157,6 +158,7 @@ static void solr_generate_document_xml_from_fields(xmlNode *solr_doc_node, HashT
 		zend_hash_get_current_data_ex(document_fields, (void **) &field, ((HashPosition *)0));
 
 		doc_field_name = (*field)->field_name;
+		doc_field_modifier = (*field)->field_modifier;
 		doc_field_value = (*field)->head;
 
 		/* Loop through all the values for this field */
@@ -181,6 +183,8 @@ static void solr_generate_document_xml_from_fields(xmlNode *solr_doc_node, HashT
 
 				is_first_value = 0; /* Turn off the flag */
 			}
+
+			xmlNewProp(solr_field_node, (xmlChar *) "update", (xmlChar *) doc_field_modifier);
 
 			/* Release the memory allocated by xmlEncodeEntitiesReentrant */
 			xmlFree(escaped_field_value);
