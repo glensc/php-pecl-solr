@@ -903,7 +903,7 @@ PHP_METHOD(SolrDocument, clear)
 }
 /* }}} */
 
-/* {{{ proto bool SolrDocument::addField(string fieldname, string value)
+/* {{{ proto bool SolrDocument::addField(string field_name, field_value [[, float field_boost], string field_modifier])
    Adds a field to the document */
 PHP_METHOD(SolrDocument, addField)
 {
