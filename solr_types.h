@@ -267,7 +267,7 @@ typedef struct {
 
 	uint count;                 /* The number of values in this field */
 
-	solr_char_t *field_name;   	/* The name of the field */
+	solr_char_t *field_name;    /* The name of the field */
 	solr_char_t *field_modifier;/* The modifier type for the field */
 
 	solr_field_value_t *head;  	/* The first value in the queue */

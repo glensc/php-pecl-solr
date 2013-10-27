@@ -165,7 +165,7 @@ ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_addField_args, SOLR_ARG_PASS_REMAINING_
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldName)
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldValue)
 ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldBoostValue)
-ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldUpdate)
+ZEND_ARG_INFO(SOLR_ARG_PASS_BY_REF_FALSE, fieldModifier)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(SolrInputDocument_getFieldBoost_args, SOLR_ARG_PASS_REMAINING_BY_REF_FALSE, SOLR_METHOD_RETURN_REFERENCE_FALSE, 1)
@@ -970,10 +970,10 @@ PHP_MINIT_FUNCTION(solr)
     solr_ce_SolrDocumentField = zend_register_internal_class(&ce TSRMLS_CC);
     solr_ce_SolrDocumentField->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
-    /* Register the name, boost, update and values properties */
+    /* Register the name, boost, modifier and values properties */
     zend_declare_property_stringl(solr_ce_SolrDocumentField, SOLR_FIELD_NAME_PROPERTY_NAME, sizeof(SOLR_FIELD_NAME_PROPERTY_NAME)-1, SOLR_SPACE_STRING, sizeof(SOLR_SPACE_STRING)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
     zend_declare_property_double(solr_ce_SolrDocumentField, SOLR_FIELD_BOOST_PROPERTY_NAME, sizeof(SOLR_FIELD_BOOST_PROPERTY_NAME)-1, 0.0f, ZEND_ACC_PUBLIC TSRMLS_CC);
-    zend_declare_property_stringl(solr_ce_SolrDocumentField, SOLR_FIELD_UPDATE_PROPERTY_NAME, sizeof(SOLR_FIELD_UPDATE_PROPERTY_NAME)-1, SOLR_SPACE_STRING, sizeof(SOLR_SPACE_STRING)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
+    zend_declare_property_stringl(solr_ce_SolrDocumentField, SOLR_FIELD_MODIFIER_PROPERTY_NAME, sizeof(SOLR_FIELD_MODIFIER_PROPERTY_NAME)-1, SOLR_SPACE_STRING, sizeof(SOLR_SPACE_STRING)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
     zend_declare_property_null(solr_ce_SolrDocumentField, SOLR_FIELD_VALUES_PROPERTY_NAME, sizeof(SOLR_FIELD_VALUES_PROPERTY_NAME)-1, ZEND_ACC_PUBLIC TSRMLS_CC);
 
     /* Register the SolrInputDocument class */
